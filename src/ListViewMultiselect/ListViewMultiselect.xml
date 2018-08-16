@@ -1,0 +1,38 @@
+<widget id="ListViewMultiselect.widget.ListViewMultiselect" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>Multiselect Helper</name>
+    <description>Dummy widget</description>
+    <icon/>
+    <properties>
+        <property key="classToToggle" type="string" required="false" defaultValue="selected">
+            <caption>Toggle Class</caption>
+            <category>Appearance</category>
+            <description>The CSS class that will be added/removed when you select or deselect an item.</description>
+        </property>
+        <property key="dataViewName" type="string" required="true" defaultValue="dataView1">
+            <caption>Data View Name</caption>
+            <category>Behavior</category>
+            <description>A dataview on this page with an object that has a reference set to the list view's objects.</description>
+        </property>
+        <property key="dataViewEntity" type="entity" required="true" allowNonPersistableEntities="true">
+            <caption>Data View Entity</caption>
+            <category>Behavior</category>
+            <description>A reference set</description>
+        </property>        
+        <property key="pathToListEntity" type="entity" allowNonPersistableEntities="true" entityProperty="dataViewEntity" isPath="yes" pathType="referenceSet" required="false">
+            <caption>Path to List Entity</caption>
+            <category>Behavior</category>
+            <description>A reference set from the data view entity to the list entity.</description>
+        </property>
+        <property key="target" type="enumeration" required="true" defaultValue="PARENT">
+            <caption>Apply To</caption>
+            <category>Appearance</category>
+            <description>Determines which element the click listener and class toggle are applied to.</description>
+            <enumerationValues>
+                <enumerationValue key="PARENT">Parent</enumerationValue>
+                <enumerationValue key="SIBLING">Previous Sibling</enumerationValue>
+                <enumerationValue key="ROW">Templategrid Row</enumerationValue>
+				<enumerationValue key="ITEM">ListView Item</enumerationValue>
+            </enumerationValues>
+        </property>        
+    </properties>
+</widget>
