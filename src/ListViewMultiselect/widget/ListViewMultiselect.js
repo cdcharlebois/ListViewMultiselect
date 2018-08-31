@@ -73,7 +73,7 @@ export default defineWidget('ListViewMultiselect', false, {
         }
     },
     _checkSelected() {
-        return this._dataViewObj.get(this._referenceSet).includes(this._obj.getGuid());
+        return this._dataViewObj.get(this._referenceSet).indexOf(this._obj.getGuid()) > -1;
     },
     _onClick() {
         if (this._checkSelected()) {
