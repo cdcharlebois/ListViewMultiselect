@@ -30,28 +30,28 @@ export default defineWidget('ListViewMultiselect', false, {
         log.call(this, 'postCreate', this._WIDGET_VERSION);
 
         switch (this.target) { //Select the right element to apply the listner and toggle class to
-        case "ROW":
-            this._elementToApplyTo = this.domNode.closest(".mx-templategrid-row");
-            break;
-        case "ITEM":
-            this._elementToApplyTo = this.domNode.closest(".mx-listview-item");
-            break;
-        case "PARENT":
-            this._elementToApplyTo = this.domNode.parentNode;
-            break;
-        case "SIBLING":
-            this._elementToApplyTo = this.domNode.previousSibling;
-            break;
-        default:
-            this._elementToApplyTo = this.domNode.parentNode;
+            case "ROW":
+                this._elementToApplyTo = this.domNode.closest(".mx-templategrid-row");
+                break;
+            case "ITEM":
+                this._elementToApplyTo = this.domNode.closest(".mx-listview-item");
+                break;
+            case "PARENT":
+                this._elementToApplyTo = this.domNode.parentNode;
+                break;
+            case "SIBLING":
+                this._elementToApplyTo = this.domNode.previousSibling;
+                break;
+            default:
+                this._elementToApplyTo = this.domNode.parentNode;
         }
 
     },
     update(obj, callback) {
         this._obj = obj;
 
-        this._referenceSet = this.pathToListEntity.split('/')[ 0 ];
-        const dvNode = query(".mx-name-" + this.dataViewName)[ 0 ];
+        this._referenceSet = this.pathToListEntity.split('/')[0];
+        const dvNode = query(".mx-name-" + this.dataViewName)[0];
         this._dataViewObj = registry.byNode(dvNode)._mxObject;
 
         this._ensureSelectionState();
@@ -61,7 +61,7 @@ export default defineWidget('ListViewMultiselect', false, {
         }
         this._connected = true;
         this._resetSubscriptions();
-        if(callback) {
+        if (callback) {
             callback();
         }
     },
