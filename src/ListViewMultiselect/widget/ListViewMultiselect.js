@@ -1,3 +1,8 @@
+/**
+ * @todo
+ * [ ] look at a boolean on the dataviewobject and effect either single- 
+ *      or multi-selection based on that boolean
+ */
 import {
     defineWidget,
     log,
@@ -14,6 +19,7 @@ export default defineWidget('ListViewMultiselect', false, {
     dataViewEntity: "",
     pathToListEntity: "",
     target: null,
+    multiSelectAttr: null,
 
     _obj: null,
     _dataViewObj: null,
@@ -74,16 +80,29 @@ export default defineWidget('ListViewMultiselect', false, {
     },
     _checkSelected() {
         return this._dataViewObj.get(this._referenceSet).indexOf(this._obj.getGuid()) > -1;
+        // return this._dataViewObj.jsonData.attributes[this._referenceSet].value.indexOf(this._obj.getGuid()) > -1;
     },
     _onClick() {
-        if (this._checkSelected()) {
-            this._deselect();
-        } else {
+        if (this.multiSelectAttr && this._dataViewObj.get(this.multiSelectAttr) === false) {
             this._select();
         }
+        else {
+            // multi
+            if (this._checkSelected()) {
+                this._deselect();
+            } else {
+                this._select();
+            }
+        }
+
     },
     _select() {
-        this._dataViewObj.addReference(this._referenceSet, this._obj.getGuid());
+        if (this.multiSelectAttr && this._dataViewObj.get(this.multiSelectAttr) === false) {
+            this._dataViewObj.set(this._referenceSet, [this._obj.getGuid()]);
+        }
+        else {
+            this._dataViewObj.addReference(this._referenceSet, this._obj.getGuid());
+        }
         mx.data.update({
             guid: this._dataViewObj.getGuid(),
         });

@@ -23,6 +23,14 @@
             <category>Behavior</category>
             <description>A reference set from the data view entity to the list entity.</description>
         </property>
+        <property key="multiSelectAttr" type="attribute" entityProperty="dataViewEntity" required="false">
+          <caption>MultiSelect Attr</caption>
+          <category>Behavior</category>
+          <description>The value of this boolean attribute will determine whether the selection is treated as single (replace) or multi (add). If not set, it will behave as a multiselect</description>
+          <attributeTypes>
+            <attributeType name="Boolean" />
+          </attributeTypes>
+        </property>
         <property key="target" type="enumeration" required="true" defaultValue="PARENT">
             <caption>Apply To</caption>
             <category>Appearance</category>
