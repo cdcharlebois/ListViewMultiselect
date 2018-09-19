@@ -1,6 +1,6 @@
 /**
  * @todo
- * [ ] look at a boolean on the dataviewobject and effect either single- 
+ * [x] look at a boolean on the dataviewobject and effect either single- 
  *      or multi-selection based on that boolean
  */
 import {
@@ -58,18 +58,35 @@ export default defineWidget('ListViewMultiselect', false, {
 
         this._referenceSet = this.pathToListEntity.split('/')[0];
         const dvNode = query(".mx-name-" + this.dataViewName)[0];
-        this._dataViewObj = registry.byNode(dvNode)._mxObject;
+        // wait for the dataview node to be loaded
+        var act = function (obj) {
+            this._dataViewObj = obj;
+            this._ensureSelectionState();
+            if (!this._connected) {
+                this.connect(this._elementToApplyTo, "click", this._onClick.bind(this));
+            }
+            this._connected = true;
+            this._resetSubscriptions();
+            if (callback) {
+                callback();
+            }
+        }.bind(this);
+        var counter = 0;
+        var wait = setInterval(function () {
+            var q = dvNode && registry.byNode(dvNode)._mxObject;
+            if (q) {
+                clearInterval(wait);
+                console.log('clearing interval');
+                act(q)
+            } else if (counter > 50) {
+                clearInterval(wait);
+                if (callback) callback();
+            }
+            else {
+                counter++;
+            }
+        }.bind(this), 100)
 
-        this._ensureSelectionState();
-
-        if (!this._connected) {
-            this.connect(this._elementToApplyTo, "click", this._onClick.bind(this));
-        }
-        this._connected = true;
-        this._resetSubscriptions();
-        if (callback) {
-            callback();
-        }
     },
     _ensureSelectionState() {
         if (this._checkSelected()) {
