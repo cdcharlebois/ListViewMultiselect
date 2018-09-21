@@ -78,8 +78,9 @@ export default defineWidget('ListViewMultiselect', false, {
                 clearInterval(wait);
                 console.log('clearing interval');
                 act(q)
-            } else if (counter > 50) {
+            } else if (counter > 20) { // 2 seconds
                 clearInterval(wait);
+                console.error('target dom node .mx-name-' + this.dataViewName + ' not loaded. Continuing without multiselect init')
                 if (callback) callback();
             }
             else {
